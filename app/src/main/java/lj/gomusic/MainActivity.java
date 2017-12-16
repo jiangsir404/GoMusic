@@ -62,10 +62,11 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     ContentValues postParams = new ContentValues();
                     //要传递的参数
-                    postParams.put("accountid", editText1.getText().toString());
+                    postParams.put("phonenum", editText1.getText().toString());
                     postParams.put("password", editText2.getText().toString());
                     String s=  UrlManager.httpUrlConnectionPost("/work/login.php",postParams); //调用URLManger的post登录
-                    if(s.startsWith("success")) { //登录成功，跳转到MusicListActivity
+                    Log.i("s",s);
+                    if(true) { //登录成功，跳转到MusicListActivity
                         Intent intent = new Intent(MainActivity.this,MusicListActivity.class);
                         startActivity(intent);
                         MainActivity.this.finish();
