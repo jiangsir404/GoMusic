@@ -11,10 +11,17 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import lj.gomusic.lrc.ILrcBuilder;
+import lj.gomusic.lrc.zyl.DefaultLrcBuilder;
+import lj.gomusic.lrc.zyl.LrcRow;
 
 public class MusicPlayActivity extends AppCompatActivity {
     private Button btstart;
@@ -31,6 +38,13 @@ public class MusicPlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_play);
+
+//        //从assets读取歌词文件内容
+//        String lrc = getFromAssets("piaoyang.lrc");
+//        //解析歌词构造器
+//        ILrcBuilder builder =new DefaultLrcBuilder();
+//        //解析歌词返回LrcRow
+//        List<LrcRow> rows = builder.getLrcRows(lrc);
 
         Bundle bundle = this.getIntent().getExtras();
 //        ArrayList<Musicitem> musicInfos = bundle.getSerializable("music");
@@ -138,4 +152,21 @@ public class MusicPlayActivity extends AppCompatActivity {
 //            }
 //        });
     }
+//    public String getFromAssets(String fileName){
+//        try {
+//            InputStreamReader inputReader = new InputStreamReader( getResources().getAssets().open(fileName) );
+//            BufferedReader bufReader = new BufferedReader(inputReader);
+//            String line="";
+//            String result="";
+//            while((line = bufReader.readLine()) != null){
+//                if(line.trim().equals(""))
+//                    continue;
+//                result += line + "\r\n";
+//            }
+//            return result;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
 }
