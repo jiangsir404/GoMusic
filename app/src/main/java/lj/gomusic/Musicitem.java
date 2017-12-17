@@ -20,6 +20,7 @@ public class Musicitem implements Serializable {  //继承Serializable， 方便
     private String author;
     private String photo;
     private String musicPath;
+    private String musicText;
     private String server = "http://59.64.78.184:6100";
 
     public Musicitem(){
@@ -51,5 +52,12 @@ public class Musicitem implements Serializable {  //继承Serializable， 方便
     }
     public String getMusicPath(){
         return musicPath;
+    }
+
+    public void setMusicText(String musicText){
+        this.musicText = musicText;
+    }
+    public String getMusicText(){
+        return musicText;
     }
 }

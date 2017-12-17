@@ -23,7 +23,10 @@
         <activity android:name=".MusicItemActivity" />
         <activity android:name=".MusicAdapter" />
         <activity android:name=".UrlManager" />
-        <activity android:name=".MusicPlayActivity"></activity>
+        <activity android:name=".MusicPlayActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".ResetPwdActivity"></activity>
     </application>
 
 </manifest>
