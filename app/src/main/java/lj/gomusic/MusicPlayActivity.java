@@ -1,49 +1,93 @@
 package lj.gomusic;
 
+import android.content.Intent;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import lj.gomusic.lrc.ILrcBuilder;
+import lj.gomusic.lrc.ILrcView;
+import lj.gomusic.lrc.zyl.DefaultLrcBuilder;
+import lj.gomusic.lrc.zyl.LrcRow;
+
 public class MusicPlayActivity extends AppCompatActivity {
-    private Button btstart;
-    private Button btstop;
-    private Button btnew;
+    private ImageView btstart;
+    private ImageView btbefore;
+    private ImageView btnext;
+    private ImageView btback;
     private MediaPlayer media;
     private Uri uriSource;
     private SeekBar seek;
+    private TextView muName;
+    private TextView muAuthor;
     private int change;
     private Timer time;
     private TimerTask task;
     private int flag;
+    private int position;
+
+    //自定义LrcView,用来展示歌词
+    ILrcView mLrcView;
+    //更新歌词屏率，单位毫秒
+    private int mPlayTimeDuration = 1000;
+    //跟新歌词的定时器
+    private Timer mTimer;
+    //更新歌词的定时任务
+    private TimerTask mTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_play);
 
+
         Bundle bundle = this.getIntent().getExtras();
 //        ArrayList<Musicitem> musicInfos = bundle.getSerializable("music");
-        ArrayList<Musicitem> musicInfos = (ArrayList<Musicitem>)getIntent().getSerializableExtra(MusicListActivity.SER_KEY);
-        int position = this.getIntent().getExtras().getInt("position");
+        final ArrayList<Musicitem> musicInfos = (ArrayList<Musicitem>)getIntent().getSerializableExtra(MusicListActivity.SER_KEY);
+        position = this.getIntent().getExtras().getInt("position");
         Log.i("position",""+position);
         Log.i("musicPath",musicInfos.get(position).getMusicPath());
-        btstart=(Button)findViewById(R.id.start);
-        btnew=(Button) findViewById(R.id.newmusic);
-        btstop = (Button) findViewById(R.id.stop);
+
+        mLrcView=(ILrcView)findViewById(R.id.lrcView);
+        btback = (ImageView) findViewById(R.id.back);
+        btstart=(ImageView) findViewById(R.id.start);
+        btbefore=(ImageView) findViewById(R.id.before);
+        btnext = (ImageView) findViewById(R.id.next);
         seek = (SeekBar) findViewById(R.id.seekBar);
+        muName = (TextView) findViewById(R.id.musicname);
+        muAuthor = (TextView)findViewById(R.id.author);
+        media=new MediaPlayer();
         change=1;
         flag = 0;
+        btback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                media.reset();
+                Intent intent = new Intent();
+                intent.setClass(MusicPlayActivity.this,MusicListActivity.class);
+                startActivity(intent);
+            }
+        });
         seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -62,10 +106,38 @@ public class MusicPlayActivity extends AppCompatActivity {
             }
         });
 
-        media=new MediaPlayer();
         uriSource = Uri.parse(musicInfos.get(position).getMusicPath());
+        Log.i("muscname:",musicInfos.get(position).getName());
+        muName.setText(musicInfos.get(position).getName());
+        muAuthor.setText(musicInfos.get(position).getAuthor());
+        ParseText(musicInfos.get(position).getMusicText());
         try {  //setDataSource()和prepare方法都需要捕获异常
             media.setDataSource(MusicPlayActivity.this, uriSource);
+            //准备播放歌曲监听
+            media.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+//                    mp.start();
+                    if(mTimer == null){
+                        mTimer = new Timer();
+                        mTask = new LrcTask();
+                        mTimer.scheduleAtFixedRate(mTask,0,mPlayTimeDuration);
+                    }
+                }
+            });
+            //歌曲播放监听完毕
+            media.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stopLrcPlay();
+                }
+            });
+            media.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,12 +159,12 @@ public class MusicPlayActivity extends AppCompatActivity {
                 if(!media.isPlaying()){
                     media.start();
                     flag = 1;
-                    btstart.setText("暂停");
+                    btstart.setImageResource(R.drawable.ic_pause);
                     seek.setMax(media.getDuration());
 
                 } else{
                     media.pause();
-                    btstart.setText("播放");
+                    btstart.setImageResource(R.drawable.ic_play);
 
                 }
                 Log.i("end1","end1");
@@ -112,30 +184,102 @@ public class MusicPlayActivity extends AppCompatActivity {
         Log.i("end2","end2");
 
 
-//        btstop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(media.isPlaying()){
-//                    media.stop();
-//                }
-//                else{
-//                    Toast.makeText(MainActivity.this,"音乐没有播放",Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
-//        btnew.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                media.reset();
-//                uri = Uri.parse("http://59.64.78.184/love.mp3");
-//                try {
-//                    media.setDataSource(MainActivity.this,uri);
-//                    media.prepare();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                media.start();
-//            }
-//        });
+        btbefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                media.reset();
+                position = position -1;
+                Log.i("position:",""+position);
+                if(position < 0){
+                    position = 0;
+                }
+                uriSource = Uri.parse(musicInfos.get(position).getMusicPath());
+                muName.setText(musicInfos.get(position).getName());
+                muAuthor.setText(musicInfos.get(position).getAuthor());
+                ParseText(musicInfos.get(position).getMusicText());
+                try {
+                    media.setDataSource(MusicPlayActivity.this,uriSource);
+                    media.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                media.start();
+                btstart.setImageResource(R.drawable.ic_pause);
+            }
+        });
+
+        btnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                media.reset();
+                position = position + 1;
+                Log.i("position:",""+position);
+                if(position >= musicInfos.size()){
+                    position = musicInfos.size() - 1;
+                }
+                uriSource = Uri.parse(musicInfos.get(position).getMusicPath());
+                muName.setText(musicInfos.get(position).getName());
+                muAuthor.setText(musicInfos.get(position).getAuthor());
+                ParseText(musicInfos.get(position).getMusicText());
+                try {
+                    media.setDataSource(MusicPlayActivity.this,uriSource);
+                    media.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                media.start();
+                btstart.setImageResource(R.drawable.ic_pause);
+            }
+        });
     }
+
+    public String getFromAssets(String fileName){
+        try {
+            InputStreamReader inputReader = new InputStreamReader( getResources().getAssets().open(fileName) );
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line="";
+            String result="";
+            while((line = bufReader.readLine()) != null){
+                if(line.trim().equals(""))
+                    continue;
+                result += line + "\r\n";
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+    public void stopLrcPlay(){
+        if(mTimer != null){
+            mTimer.cancel();
+            mTimer = null;
+        }
+    }
+
+    public void ParseText(String Text){
+        //从assets读取歌词文件内容
+        Log.i("musicText:",Text);
+        String lrc = getFromAssets(Text);
+        //解析歌词构造器
+        ILrcBuilder builder =new DefaultLrcBuilder();
+        //解析歌词返回LrcRow
+        List<LrcRow> rows = builder.getLrcRows(lrc);
+        //将得到的歌词集合传给mLrcView来显示
+        mLrcView.setLrc(rows);
+    }
+    class LrcTask extends TimerTask{
+        public void run(){
+            //获取歌曲播放位置
+            final long timePassed = media.getCurrentPosition();
+            MusicPlayActivity.this.runOnUiThread(new Runnable(){
+                public void run(){
+                    //滚动歌词
+                    mLrcView.seekLrcToTime(timePassed);
+                }
+            });
+        }
+
+    }
+
 }

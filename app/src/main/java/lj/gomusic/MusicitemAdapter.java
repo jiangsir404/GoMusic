@@ -39,10 +39,11 @@ public class MusicitemAdapter extends ArrayAdapter<Musicitem> {
         //通过Adapter 将数据和ListVIew绑定
         final View view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
         TextView musicName = (TextView) view.findViewById(R.id.musicname);
-        TextView editNum = (TextView) view.findViewById(R.id.editnum);
+//        TextView musicAuthor = (TextView) view.findViewById(R.id.author);
+        //TextView editNum = (TextView) view.findViewById(R.id.editnum);
         musicName.setText(music.getName());
-
-        editNum.setText((""+(position+1)));
+//        musicAuthor.setText(music.getAuthor());
+//        editNum.setText((""+(position+1)));
         return view;
     }
 }
