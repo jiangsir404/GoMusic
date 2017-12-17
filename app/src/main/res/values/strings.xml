@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">GoMusic</string>
+    <string name="app_name">够音乐</string>
     <string name="next"><![CDATA[->]]></string>
     <string name="before"><![CDATA[<-]]></string>
-    <string name="go"><![CDATA[>>]]></string>
+    <string name="go"><![CDATA[->]]></string>
     <string name="action_settings">Settings</string>
 </resources>

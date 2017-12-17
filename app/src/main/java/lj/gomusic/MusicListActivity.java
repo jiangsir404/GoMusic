@@ -55,6 +55,7 @@ public class MusicListActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
     private void initData(){
         new Thread(new Runnable(){
             @Override
@@ -71,9 +72,11 @@ public class MusicListActivity extends AppCompatActivity {
                     for(int i=0;i<array.length();i++){
                         JSONObject object = array.getJSONObject(i);
                         Musicitem mitem = new Musicitem();
-                        mitem.setName(object.getString("Name"));
-                        mitem.setAuthor(object.getString("Author"));
+                        mitem.setName(object.getString("musicName"));
+                        mitem.setAuthor(object.getString("musicAuthor"));
                         mitem.setMusicPath(object.getString("musicPath"));
+                        mitem.setPhoto(object.getString("musicPhoto"));
+                        mitem.setMusicText(object.getString("musicText"));
                         musicList.add(mitem);
                     }
                     Thread.sleep(1000);
