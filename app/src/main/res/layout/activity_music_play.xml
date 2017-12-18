@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/back"
-            android:src="@drawable/musicl"
+            android:src="@drawable/left5"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:text="@string/before" />

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@mipmap/login5">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/back"
+            android:src="@drawable/left5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <ImageView
+        android:src="@mipmap/t2"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="277dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="昵称："
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.3"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/text_name"
+            android:textSize="20sp"
+            android:text="rivir"
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="277dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="性别："
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.3"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/text_sex"
+            android:textSize="20sp"
+            android:text="rivir"
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="277dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="手机号："
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.4"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/text_num"
+            android:textSize="20sp"
+            android:text="rivir"
+            android:layout_weight="0.6"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="277dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="个人简介："
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/text_text"
+            android:textSize="20sp"
+            android:text="rivir"
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp"
+        android:text="修改密码"
+        android:id="@+id/submit"
+        android:textSize="20sp"
+        android:background="#e6e0e6"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="注销"
+        android:id="@+id/cancel"
+        android:textSize="20sp"
+        android:background="#e6e0e6"
+        android:layout_marginTop="10dp" />
+
+    />
+
+</LinearLayout>

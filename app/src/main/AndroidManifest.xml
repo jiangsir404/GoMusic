@@ -26,7 +26,8 @@
         <activity android:name=".MusicPlayActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ResetPwdActivity"></activity>
+        <activity android:name=".ResetPwdActivity" />
+        <activity android:name=".PersionalActivity"></activity>
     </application>
 
 </manifest>

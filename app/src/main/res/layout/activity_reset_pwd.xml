@@ -63,10 +63,9 @@
         android:layout_marginRight="30dp"/>
 
     <Button
-        android:id="@+id/resetpwd_btn_sure"
+        android:id="@+id/submit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/resetpwd_edit_pwd_new"
         android:layout_marginTop="70dp"
         android:background="#957ab2"
         android:text="确定"
@@ -75,10 +74,9 @@
         android:layout_marginRight="30sp" />
 
     <Button
-        android:id="@+id/resetpwd_btn_cancel"
+        android:id="@+id/back"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/resetpwd_btn_sure"
         android:layout_marginTop="10dp"
         android:background="#957ab2"
         android:text="取消"

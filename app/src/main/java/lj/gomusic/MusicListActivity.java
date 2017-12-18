@@ -2,12 +2,14 @@ package lj.gomusic;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 public class MusicListActivity extends AppCompatActivity {
     private ArrayList<Musicitem> musicList;
     private Button button;
+    private ImageView persional;
+    private ImageView reset;
     public final static String SER_KEY = "ser";
 
     @Override
@@ -27,6 +31,8 @@ public class MusicListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_music_list);
 
         ListView listView = (ListView)findViewById(R.id.list_view);
+        persional = (ImageView)findViewById(R.id.persional);
+        reset = (ImageView)findViewById(R.id.reset);
 
         musicList = new ArrayList<Musicitem>();
         initData();
@@ -48,12 +54,20 @@ public class MusicListActivity extends AppCompatActivity {
             }
         });
 
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        persional.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MusicListActivity.this,PersionalActivity.class);
+                startActivity(intent);
+            }
+        });
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MusicListActivity.this,MusicListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initData(){

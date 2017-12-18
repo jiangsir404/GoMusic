@@ -63,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try{
-                    Log.i("phonenum",username.getText().toString());
                     ContentValues postParams = new ContentValues();
                     //要传递的参数
                     postParams.put("phonenum", phone.getText().toString());
@@ -72,10 +71,11 @@ public class RegisterActivity extends AppCompatActivity {
                     postParams.put("repeat_password", repeatPassword.getText().toString());
                     String s=  UrlManager.httpUrlConnectionPost("/work/register.php",postParams); //调用URLManger的post登录
                     if(s.indexOf("register success") != -1) { //登录成功，跳转到MusicListActivity
-                        Looper.prepare();
-                        Toast toast= Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT);
-                        toast.show();
-                        Looper.loop();
+//                        Looper.prepare();
+//                        Toast toast= Toast.makeText(ResetPwdActivity.this, "注册成功", Toast.LENGTH_SHORT);
+//                        toast.show();
+//                        Looper.loop();
+
                         Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                         startActivity(intent);
                     }else{
