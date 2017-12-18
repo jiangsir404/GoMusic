@@ -71,11 +71,6 @@ public class RegisterActivity extends AppCompatActivity {
                     postParams.put("repeat_password", repeatPassword.getText().toString());
                     String s=  UrlManager.httpUrlConnectionPost("/work/register.php",postParams); //调用URLManger的post登录
                     if(s.indexOf("register success") != -1) { //登录成功，跳转到MusicListActivity
-//                        Looper.prepare();
-//                        Toast toast= Toast.makeText(ResetPwdActivity.this, "注册成功", Toast.LENGTH_SHORT);
-//                        toast.show();
-//                        Looper.loop();
-
                         Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                         startActivity(intent);
                     }else{
@@ -95,25 +90,4 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

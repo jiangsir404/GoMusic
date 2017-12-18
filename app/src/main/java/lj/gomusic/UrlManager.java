@@ -52,6 +52,7 @@ public class UrlManager {
 
     public static String httpUrlConnectionGet(String urlString){
         try {
+            Log.i("请求url:",urlString);
             StringBuffer html = new StringBuffer();
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

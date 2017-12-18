@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.email_login_form);
         //  linearLayout.getBackground().setAlpha(100);//0~255透明度值 0：全透明；255不透明
 
-
         btlogin = (Button) findViewById(R.id.button_add);
         btregister = (Button) findViewById(R.id.button_reg);
         btlogin.setOnClickListener(new View.OnClickListener() {
@@ -48,32 +47,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-
-
 
 }

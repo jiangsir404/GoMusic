@@ -41,6 +41,8 @@ public class MusicListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
                 Toast.makeText(MusicListActivity.this,"您选择了"+ musicList.get(i).getName(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MusicListActivity.this,MusicPlayActivity.class);
                 Bundle bundle = new Bundle();
