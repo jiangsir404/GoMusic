@@ -5,7 +5,7 @@ A android muisc player
 一款仿网易云音乐的简易音乐播放器
 
 # 团队
-Make by @罗江，@张亚利，@李航
+Make by @rivir，@zyl，@lh
 
 # 功能
 
